@@ -22,31 +22,31 @@ namespace holyBoly.Repositories
         public Message signUp(User user){
             if(!this.checkIfUserExist(user)){
                 this.writeToDb(user);
-                return new Message {message="You have registered", auth=true} ;
+                return new Message {message="You have registered", auth=true,userData=new UserInfo{FirstName=user.FirstName,LastName=user.LastName,Email=user.Email,State=user.State,Phone=user.Phone}};
             }
-            return new Message {message="This user exist", auth=false};
+            return new Message {message="This user exist", auth=false,userData=new UserInfo{}};
         }
         public Message login(User user){
            var userToCheck = this.findUser(user.Email);
            
            if(userToCheck.Email== ""){
-               return new Message {message="you have incorrect password or email", auth=false};
+               return new Message {message="you have incorrect password or email", auth=false,userData=new UserInfo{}};
            }
            if(user.Password == userToCheck.Password){
-               return new Message {message="you have login", auth=true};
+               return new Message {message="you have login", auth=true,userData=new UserInfo{FirstName=userToCheck.FirstName,LastName=userToCheck.LastName,Email=userToCheck.Email,State=userToCheck.State,Phone=userToCheck.Phone}};
            }
-            return new Message {message="you have incorrect password or email", auth=false}; 
+            return new Message {message="you have incorrect password or email", auth=false,userData=new UserInfo{}}; 
         }
         public Message updateProfile(User user){
              var userToCheck = this.findUser(user.Email);
 
            if(userToCheck.Email== ""){
-               return new Message {message="you have incorrect password or email", auth=false};
+               return new Message {message="you have incorrect password or email", auth=false,userData=new UserInfo{FirstName=user.FirstName,LastName=user.LastName,Email=user.Email,State=user.State,Phone=user.Phone}};
            }
            if(user.Password == userToCheck.Password){
-            return new Message {message="Profile have been changed",auth=true};
+            return new Message {message="Profile have been changed",auth=true,userData=new UserInfo{FirstName=user.FirstName,LastName=user.LastName,Email=user.Email,State=user.State,Phone=user.Phone}};
            }
-            return new Message {message="you are not loginin",auth=true};
+            return new Message {message="you are not loginin",auth=true,userData=new UserInfo{FirstName=user.FirstName,LastName=user.LastName,Email=user.Email,State=user.State,Phone=user.Phone}};
         }
         private void writeToDb(User user){
         List<User> jsonObj =  this.getDb();
