@@ -23,10 +23,15 @@ namespace holyBoly.Controllers{
         public Message login([FromBody]User user){
            return repository.login(user);
         }
-          [HttpPost]
+        [HttpPost]
         [Route("changeProfile")]
         public Message changeProfile([FromBody]User user){
            return repository.updateProfile(user);
+        }
+        [HttpPost]
+        [Route("changePassword")]
+        public Message changePassword([FromBody]UserInfoCP user){
+           return repository.changePassword(user);
         }
     }
 }
